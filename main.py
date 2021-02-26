@@ -82,7 +82,7 @@ def iterate(temperature):
             for i in cities:
                 bestAns.append(i)
             
-            initalans=difference+initalans
+            initialans=difference+initialans
         
         temperature=temperature*cr
     
@@ -105,19 +105,17 @@ def plotTSP(bestAns, coords):
 
     plt.plot(x, y, 'co')
 
-    # Set a scale for the arrow heads (there should be a reasonable default for this, WTF?)
     a_scale = float(max(x))/float(100)
 
     
 
-    # Draw the primary path for the TSP problem
     plt.arrow(x[-1], y[-1], (x[0] - x[-1]), (y[0] - y[-1]), head_width = a_scale,
             color ='g', length_includes_head=True)
     for i in range(0,len(x)-1):
         plt.arrow(x[i], y[i], (x[i+1] - x[i]), (y[i+1] - y[i]), head_width = a_scale,
                 color = 'g', length_includes_head = True)
 
-    #Set axis too slitghtly larger than the set of x and y
+
     plt.xlim(min(x)*1.1, max(x)*1.1)
     plt.ylim(min(y)*1.1, max(y)*1.1)
     plt.show()
@@ -133,12 +131,11 @@ mapOFCities={}
 coords=[]
 
 # enter required data
-dataSet="rbx711.txt"
+dataSet="data/xqf131.txt"
 
 with open(dataSet, "r") as file:
     for line in file.readlines():
         line = [float(x.replace("\n", "")) for x in line.split(" ")]
-            
         # print(line)
         city= int(line[0])
         x= int(line[1])
@@ -148,6 +145,8 @@ with open(dataSet, "r") as file:
         coords.append([x, y])
             
         mapOFCities[city]= [x,y]
+        
+        
 
 
 global numOFCities, cr, absTemp, initialans, ans, bestAns
@@ -155,10 +154,6 @@ global numOFCities, cr, absTemp, initialans, ans, bestAns
 numOFCities= len(mapOFCities)
 bestAns=[]
 
-# sa = SimAnneal(coords, stopping_iter=15000)
-# sa.anneal()
-# sa.visualize_routes()
-# sa.plot_learning()
 
 
 
@@ -172,7 +167,7 @@ pr=1
 
 
 bestAns= cities.copy()
-ans= initalans
+ans= initialans
 for _ in range(10):
     
     
@@ -186,7 +181,6 @@ print(ans)
 
 
 
-# sa.visualize_routes()
-# sa.plot_learning()
+
 
 plotTSP(bestAns, coords)
